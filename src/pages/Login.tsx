@@ -29,7 +29,7 @@ const Login = () => {
         id: data.userId,
         password: data.password,
       };
-      const res = await login(userInfo).unwrap();
+      const res = await login(userInfo).unwrap();  // only returns the required data part of the response
 
       const user = verifyToken(res.data.accessToken) as TUser;
       dispatch(setUser({ user: user, token: res.data.accessToken }));
