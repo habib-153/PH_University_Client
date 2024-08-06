@@ -1,6 +1,17 @@
 import { FieldValues, SubmitHandler } from "react-hook-form";
 import PHForm from "../../../components/form/PHForm";
 import { Button, Col, Flex } from "antd";
+import PHSelect from "../../../components/form/PHSelect";
+import { monthOptions } from "../../../constants/global";
+import { semesterOptions } from "../../../constants/semester";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { academicSemesterSchema } from "../../../Schemas/academicSemesterSchema";
+
+const currentYear = new Date().getFullYear();
+const yearOptions = [0,1,2,3,4].map(number => ({
+    value: String(currentYear + number),
+    label: String(currentYear + number),
+}))
 
 const CreateAcademicSemester = () => {
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
