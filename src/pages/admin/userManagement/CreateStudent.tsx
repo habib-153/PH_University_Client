@@ -7,6 +7,7 @@ import { bloodGroupOptions, genderOptions } from "../../../constants/global";
 import { useGetAcademicDepartmentQuery, useGetAllSemestersQuery } from "../../../redux/features/admin/academicManagement.api";
 import PHDatePicker from "../../../components/form/PHDatePicker";
 import { useAddStudentMutation } from "../../../redux/features/admin/userManagement.api";
+import { toast } from "sonner";
 
 const studentDefaultValues = {
   name: {
@@ -59,7 +60,7 @@ const CreateStudent = () => {
     label: item.name,
   })) ;
 
-  const onSubmit : SubmitHandler<FieldValues> = (data) => {
+  const onSubmit : SubmitHandler<FieldValues> = async (data) => {
     const studentData = {
       password: 'student123',
       student: data
@@ -67,8 +68,14 @@ const CreateStudent = () => {
     console.log(studentData)
     const formData = new FormData()
     formData.append('data', JSON.stringify(studentData))
+    formData.append('file', data.image)
+
     //console.log(Object.fromEntries(formData))
-    addStudent(studentData)
+    const result = await addStudent(formData)
+    console.log(result)
+    if (result?.data?.success) {
+      toast.success('Student added successfully')
+    }
   }
   return (
     <Row justify="center">
