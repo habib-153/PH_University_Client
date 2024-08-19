@@ -3,6 +3,7 @@ import { TSemester } from '../../../types/courseManagement';
 import { useState } from 'react';
 import { useGetAllRegisteredSemestersQuery, useUpdateRegisteredSemesterMutation } from '../../../redux/features/admin/courseManagement';
 import moment from 'moment';
+import { toast } from 'sonner';
 
 export type TTableData = Pick<TSemester, 'startDate' | 'endDate' | 'status'>;
 
@@ -41,15 +42,19 @@ const RegisteredSemesters = () => {
     })
   );
 
-  const handleStatusUpdate = (data) => {
+  const handleStatusUpdate = async(data) => {
     const updateData = {
       id: semesterId,
       data: {
         status: data.key,
       },
     };
-console.log(data)
-    updateSemesterStatus(updateData);
+
+    const res = await updateSemesterStatus(updateData);
+    console.log(res)
+    if(res.error){
+        toast.error(res.error.data.message);
+    }
   };
 
   const menuProps = {
