@@ -6,7 +6,7 @@ type TPHSelectProps = {
   name: string;
   options: { value: string; label: string; disabled?: boolean }[] | undefined
   disabled?: boolean;
-  mode: "multiple" | "tags" | undefined;
+  mode?: "multiple" | "tags" | undefined;
 };
 
 const PHSelect = ({ label, name, options, disabled, mode }: TPHSelectProps) => {
